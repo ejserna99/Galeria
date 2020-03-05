@@ -1,0 +1,12 @@
+img {
+    max-width: 250px;
+}
+
+.card {
+    border: none;
+}
+
+.card:hover {
+    cursor: pointer;
+    border: 1px solid rgba(0,0,0,.125);
+}

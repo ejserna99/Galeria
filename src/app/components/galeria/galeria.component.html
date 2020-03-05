@@ -1,0 +1,7 @@
+<div class="card-columns">
+   <div class="card" *ngFor="let item of galeriaItems">
+        <a (click)="openDialog(item.image)" data-toggle="modal" data-target="#Modal">
+            <img class="card-img-top" src="{{item.image}}" alt="Card modal" style="max-width: 450px; max-height: 450px;">
+        </a>
+   </div>
+</div>

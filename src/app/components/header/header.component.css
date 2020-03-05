@@ -1,0 +1,25 @@
+.active {
+    font-weight: bolder !important;
+    color: white !important;
+}
+
+.active-sticky {
+    font-weight: bolder !important;
+    color: rgb(24, 23, 23) !important;
+}
+
+.nav-link {
+    font-size: 1rem;
+}
+
+.sticky {
+    background: #fff !important;
+    box-shadow: 0 3px 12px 0 rgba(0,0,0,.08);
+    height: 85px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+}
