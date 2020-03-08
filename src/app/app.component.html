@@ -1,7 +1,0 @@
-<div *ngIf="rutaAdmin; then thenBlock else elseBlock"></div>
-<ng-template #thenBlock>
-    <router-outlet></router-outlet>
-</ng-template>
-<ng-template #elseBlock>
-    <app-principal (scroll)="onWindowScroll($event);"></app-principal>
-</ng-template>
