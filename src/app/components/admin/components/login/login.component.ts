@@ -19,6 +19,9 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
+    $(".btn").prop('disabled', true);
+    $(".text-btn").addClass('d-none');
+    $(".cargando").removeClass('d-none').addClass('d-block');
     const email = $('#email').val().toString();
     const password = $('#password').val().toString();
 
@@ -34,5 +37,8 @@ export class LoginComponent implements OnInit {
       }
       console.log(err.code);
     });
+    $(".btn").prop('disabled', false);
+    $(".text-btn").removeClass('d-none');
+    $(".cargando").removeClass('d-block').addClass('d-none');
   }
 }

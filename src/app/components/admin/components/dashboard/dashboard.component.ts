@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
+import { AuthService } from 'src/app/services/auth.service';
+import { Router } from '@angular/router';
 
 declare var $: any;
 
@@ -17,9 +19,11 @@ export class DashboardComponent implements OnInit {
     { name: 'Galeria',      rute: 'galeria' }
   ];
 
-  constructor(private location: Location) {
+  constructor(public authService: AuthService, private router: Router, private location: Location) {
 
     // this.rutaHome = location.path();
+
+    console.log(this.authService.isAuth().subscribe(a => a));
   }
 
   ngOnInit() {
@@ -39,5 +43,12 @@ export class DashboardComponent implements OnInit {
   cargarRuta(ruta: string) {
     console.log(ruta);
     this.rutaDash = ruta;
+  }
+
+  cerrarSesion() {
+    this.authService.logoutUser();
+    setTimeout(() => {
+      this.router.navigateByUrl('');
+    }, 300);
   }
 }

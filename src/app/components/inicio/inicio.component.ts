@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalGaleriaComponent } from '../modal-galeria/modal-galeria.component';
 import { MatDialog } from '@angular/material/dialog';
+import { DataApiService } from 'src/app/services/data-api.service';
+import { Observable } from 'rxjs';
+import { AngularFirestoreCollection } from '@angular/fire/firestore';
+
+export interface ItemInicio { id: string; titulo: string; descripcion: string; image: string; }
 
 @Component({
   selector: 'app-inicio',
@@ -9,42 +14,19 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class InicioComponent implements OnInit {
 
-  public cardItems = [
-    {
-      titulo: 'PINTURA',
-      // tslint:disable-next-line:max-line-length
-      descripcion: 'Técnica con la cual una superficie o soporte se llena de color y a través de líneas, materias y pigmentos se forma una imagen abstracta o figurativa.',
-      image: 'https://cdn.shopify.com/s/files/1/1781/0251/files/pintura_239bdb58-a51f-4d01-8708-d00194eeb474_360x304.jpg?v=1501887116'
-    },
-    {
-      titulo: 'PINTURA',
-      // tslint:disable-next-line:max-line-length
-      descripcion: 'Técnica con la cual una superficie o soporte se llena de color y a través de líneas, materias y pigmentos se forma una imagen abstracta o figurativa.',
-      image: 'https://cdn.shopify.com/s/files/1/1781/0251/files/pintura_239bdb58-a51f-4d01-8708-d00194eeb474_360x304.jpg?v=1501887116'
-    },
-    {
-      titulo: 'PINTURA',
-      // tslint:disable-next-line:max-line-length
-      descripcion: 'Técnica con la cual una superficie o soporte se llena de color y a través de líneas, materias y pigmentos se forma una imagen abstracta o figurativa.',
-      image: 'https://cdn.shopify.com/s/files/1/1781/0251/files/pintura_239bdb58-a51f-4d01-8708-d00194eeb474_360x304.jpg?v=1501887116'
-    },
-    {
-      titulo: 'PINTURA',
-      // tslint:disable-next-line:max-line-length
-      descripcion: 'Técnica con la cual una superficie o soporte se llena de color y a través de líneas, materias y pigmentos se forma una imagen abstracta o figurativa.',
-      image: 'https://cdn.shopify.com/s/files/1/1781/0251/files/pintura_239bdb58-a51f-4d01-8708-d00194eeb474_360x304.jpg?v=1501887116'
-    },
-    {
-      titulo: 'PINTURA',
-      // tslint:disable-next-line:max-line-length
-      descripcion: 'Técnica con la cual una superficie o soporte se llena de color y a través de líneas, materias y pigmentos se forma una imagen abstracta o figurativa.',
-      image: 'https://cdn.shopify.com/s/files/1/1781/0251/files/pintura_239bdb58-a51f-4d01-8708-d00194eeb474_360x304.jpg?v=1501887116'
-    }
-  ];
+  cardItems: ItemInicio[];
 
-  constructor(public dialog: MatDialog) { }
+  constructor(private dataApiService: DataApiService, public dialog: MatDialog) { }
 
   ngOnInit() {
+    this.dataApiService.getGallerys('inicio').subscribe(data => {
+      this.cardItems = data.map(e => {
+        return {
+          id: e.payload.doc.id,
+          ...e.payload.doc.data()
+        } as ItemInicio;
+      });
+    });
   }
 
   openDialog(title, img, desc): void {

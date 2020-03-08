@@ -1,6 +1,6 @@
 <div *ngIf="rutaAdmin; then thenBlock else elseBlock"></div>
 <ng-template #thenBlock>
-    <app-admin></app-admin>
+    <router-outlet></router-outlet>
 </ng-template>
 <ng-template #elseBlock>
     <app-principal (scroll)="onWindowScroll($event);"></app-principal>

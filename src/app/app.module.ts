@@ -1,21 +1,23 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { environment } from '../environments/environment';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Firebase
 import { AngularFireModule } from '@angular/fire';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFirestoreModule, AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 
 // Angular Material
 import { MatDialogModule } from '@angular/material/dialog';
 
 // Componentes de Administrador
-import { AdminComponent } from './components/admin/admin.component';
 import { LoginComponent } from './components/admin/components/login/login.component';
 import { DashboardComponent } from './components/admin/components/dashboard/dashboard.component';
 
@@ -33,11 +35,12 @@ import { SliderComponent } from './components/slider/slider.component';
 import { CmsInicioComponent } from './components/admin/components/cms-inicio/cms-inicio.component';
 import { CmsSliderComponent } from './components/admin/components/cms-slider/cms-slider.component';
 import { CmsGaleriaComponent } from './components/admin/components/cms-galeria/cms-galeria.component';
+import { DataApiService } from './services/data-api.service';
+import { DomSeguroPipe } from './pipes/dom-seguro.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AdminComponent,
     LoginComponent,
     DashboardComponent,
     BlogComponent,
@@ -52,19 +55,24 @@ import { CmsGaleriaComponent } from './components/admin/components/cms-galeria/c
     SliderComponent,
     CmsInicioComponent,
     CmsSliderComponent,
-    CmsGaleriaComponent
+    CmsGaleriaComponent,
+    DomSeguroPipe
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
+    AngularFireDatabaseModule,
+    AngularFireStorageModule,
     MatDialogModule
   ],
   entryComponents: [ModalGaleriaComponent],
-  providers: [],
+  providers: [DataApiService, AngularFirestore],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

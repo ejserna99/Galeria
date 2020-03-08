@@ -1,5 +1,5 @@
 <!-- Esta es para la galeria -->
-<div *ngIf="image" class="galeria" style="background-image: url({{image}});"></div>
+<div *ngIf="image" class="galeria" [style.background-image]="image"></div>
 
 <!-- Esta es para el inicio -->
 <div *ngIf="dataInicio" class="card bg-light" >
