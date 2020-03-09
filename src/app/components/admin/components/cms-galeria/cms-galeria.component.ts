@@ -73,10 +73,10 @@ export class CmsGaleriaComponent implements OnInit {
     let tareaImg = this.dataApiService.cloudStorage(rutaImg, image);
 
     // Capturo el cambio de porcentaje de subida para las imagenes
-    tareaMin.percentageChanges().subscribe((porcentaje) => {
-      this.porcentaje.miniatura = Math.round(porcentaje);
-      tareaImg.percentageChanges().subscribe((porcentaje) => {
-        this.porcentaje.image = Math.round(porcentaje);
+    tareaMin.percentageChanges().subscribe((porcentajeMin) => {
+      this.porcentaje.miniatura = Math.round(porcentajeMin);
+      tareaImg.percentageChanges().subscribe((porcentajeImg) => {
+        this.porcentaje.image = Math.round(porcentajeImg);
 
         if (this.porcentaje.image == 100 && this.porcentaje.miniatura == 100)
         {

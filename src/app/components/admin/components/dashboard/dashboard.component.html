@@ -1,7 +1,7 @@
 <div class="d-flex" id="wrapper">
 
   <!-- Sidebar -->
-  <div class="bg-light border-right" id="sidebar-wrapper">
+  <div class="bg-light border-right sticky-top" id="sidebar-wrapper">
     <div class="sidebar-heading">Panel Administrador</div>
     <div class="list-group list-group-flush">
       <a *ngFor="let item of navItems" (click)="cargarRuta('cms'+item.rute)" class="list-group-item list-group-item-action bg-light">{{item.name}}</a>
@@ -11,7 +11,7 @@
 
   <!-- Page Content -->
   <div id="page-content-wrapper">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom sticky-top">
       <button (click)="menuToggle()" class="btn btn-primary" id="menu-toggle">Menu</button>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -38,7 +38,7 @@
             </li> -->
           </ul>
           </div>
-      </nav>
+    </nav>
 
       <div class="container-fluid">
         <!-- <router-outlet *ngIf="!rutaHome"></router-outlet> -->

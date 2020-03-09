@@ -1,4 +1,4 @@
-.active {
+.active, .navbar-brand {
     font-weight: bolder !important;
     color: white !important;
     transition: width 2s linear 1s;

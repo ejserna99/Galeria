@@ -14,4 +14,8 @@ export class FooterComponent implements OnInit {
   ngOnInit() {
   }
 
+  scrollTop() {
+    $('html, body').animate({scrollTop: 0}, 'slow');
+  }
+
 }

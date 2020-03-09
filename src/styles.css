@@ -9,7 +9,7 @@
     -moz-osx-font-smoothing: grayscale;
 }
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: 'Linden Hill', serif; }
 
  /* Rules for sizing the icon. */
  .material-icons.md-18 { font-size: 18px; }
@@ -39,7 +39,7 @@ No media query since this is the default in Bootstrap */
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) { 
     .nav-link {
-        font-size: 1.3rem !important;
+        font-size: 1rem !important;
     }
  }
 
@@ -51,7 +51,7 @@ No media query since this is the default in Bootstrap */
  /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
     .nav-link {
-        font-size: 1.5rem !important;
+        font-size: 1.2rem !important;
     }
  }
 

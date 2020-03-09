@@ -14,7 +14,7 @@ export class CmsInicioComponent implements OnInit {
     titulo: new FormControl(null, Validators.required),
     descripcion: new FormControl(null, Validators.required)
   });
-  
+
   public mensajeArchivo = 'No hay una imagen seleccionada';
   public datosFormulario = new FormData();
   public nombreArchivo = '';
@@ -33,7 +33,7 @@ export class CmsInicioComponent implements OnInit {
         this.mensajeArchivo = `Imagen preparada: ${event.target.files[i].name}`;
         this.nombreArchivo = event.target.files[i].name;
         this.datosFormulario.delete('image');
-        this.datosFormulario.append('image', event.target.files[i], event.target.files[i].name)
+        this.datosFormulario.append('image', event.target.files[i], event.target.files[i].name);
       }
     } else {
       this.mensajeArchivo = 'No hay una imagen seleccionado';
@@ -41,15 +41,19 @@ export class CmsInicioComponent implements OnInit {
   }
 
   public insertarDatos(value: any) {
-    const nombreArchivo = `upload/images/inicio/card_${this.nombreArchivo}`;
-    let archivo = this.datosFormulario.get('image');
-    let referencia = this.dataApiService.referenciaCloudStorage(nombreArchivo);
-    let tarea = this.dataApiService.cloudStorage(nombreArchivo, archivo);
+    $('.btn').prop('disabled', true);
+    $('.text-btn').addClass('d-none');
+    $('.cargando').removeClass('d-none').addClass('d-block');
 
-    //Cambia el porcentaje
+    const nombreArchivo = `upload/images/inicio/card_${this.nombreArchivo}`;
+    const archivo = this.datosFormulario.get('image');
+    const referencia = this.dataApiService.referenciaCloudStorage(nombreArchivo);
+    const tarea = this.dataApiService.cloudStorage(nombreArchivo, archivo);
+
+    // Cambia el porcentaje
     tarea.percentageChanges().subscribe((porcentaje) => {
       this.porcentaje = Math.round(porcentaje);
-      if (this.porcentaje == 100) {
+      if (this.porcentaje === 100) {
         this.finalizado = true;
 
         referencia.getDownloadURL().subscribe((URL) => {
@@ -58,6 +62,9 @@ export class CmsInicioComponent implements OnInit {
             .then(res => {
               console.log(res);
               this.respuesta.mensaje = 'Registro guardado correctamente.';
+              $('.btn').prop('disabled', false);
+              $('.text-btn').removeClass('d-none');
+              $('.cargando').removeClass('d-block').addClass('d-none');
               this.inicioCmsForm.reset();
             }, err => {
               console.log(err);
