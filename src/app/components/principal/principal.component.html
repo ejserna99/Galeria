@@ -1,4 +1,11 @@
-<app-slider></app-slider>
-<app-header></app-header>
-<router-outlet></router-outlet>
-<app-footer></app-footer>
+<div *ngIf="!cargado" class="d-flex justify-content-center align-items-center h-100 bg-light" style="height: 100vh;">
+    <div class="spinner-grow text-dark mx-auto my-auto" role="status" style="width: 5rem; height: 5rem;">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+<app-slider (cargado)="procesaPropagar($event)"></app-slider>
+<div *ngIf="cargado" class="animated slideInUp bg-light">
+    <app-header></app-header>
+    <router-outlet></router-outlet>
+    <app-footer></app-footer>
+</div>

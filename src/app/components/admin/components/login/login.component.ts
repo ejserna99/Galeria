@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
+import { take, tap, map } from 'rxjs/operators';
 
 declare var $: any;
 
@@ -11,17 +12,27 @@ declare var $: any;
 })
 export class LoginComponent implements OnInit {
 
-  mensaje: string;
+  public mensaje: string;
+  public logget = true;
 
-  constructor(public authService: AuthService, private router: Router) {}
+  constructor(public authService: AuthService, private router: Router) {
+    this.authService.isAuth().subscribe(a => {
+      this.logget = a ? true : false;
+      
+      if (this.logget) {
+        this.router.navigate(['admin/home']);
+        console.log('legget', this.logget);
+      }
+    });
 
-  ngOnInit() {
   }
 
+  ngOnInit() { }
+
   onSubmit() {
-    $(".btn").prop('disabled', true);
-    $(".text-btn").addClass('d-none');
-    $(".cargando").removeClass('d-none').addClass('d-block');
+    $('.btn').prop('disabled', true);
+    $('.text-btn').addClass('d-none');
+    $('.cargando').removeClass('d-none').addClass('d-block');
     const email = $('#email').val().toString();
     const password = $('#password').val().toString();
 
@@ -37,8 +48,8 @@ export class LoginComponent implements OnInit {
       }
       console.log(err.code);
     });
-    $(".btn").prop('disabled', false);
-    $(".text-btn").removeClass('d-none');
-    $(".cargando").removeClass('d-block').addClass('d-none');
+    $('.btn').prop('disabled', false);
+    $('.text-btn').removeClass('d-none');
+    $('.cargando').removeClass('d-block').addClass('d-none');
   }
 }

@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-12 d-flex align-items-center" style="height: 80vh;">
       <div class="card mx-auto p-5">
-        <form [formGroup]="galeriaCmsForm" (ngSubmit)="insertarDatos(galeriaCmsForm.value)">
+        <form [formGroup]="galeriaCmsForm" (ngSubmit)="insertarDatos()">
           <div class="custom-file mb-3">
             <input formControlName="miniatura" (change)="cambioArchivo($event)" type="file" class="custom-file-input" id="miniatura">
             <label class="custom-file-label" for="miniatura">{{mensajeArchivo.miniatura}}</label>
@@ -18,7 +18,7 @@
             </button>
           </div>
         </form>
-        <div *ngIf="respuesta.mensaje != ''"  class="alert alert-{{respuesta.color}} mt-2" role="alert">
+        <div id="success-alert" class="alert alert-{{respuesta.color}} alert-dismissible fade show mt-2" role="alert">
           {{respuesta.mensaje}}
         </div>
       </div>

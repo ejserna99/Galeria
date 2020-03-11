@@ -1,36 +1,23 @@
-.btn-whatsapp {
-    display:block;
-    width:70px;
-    height:70px;
-    color: #fff;
+footer {
     position: fixed;
-    margin-left:20px;
-    bottom:20px;
-    border-radius:50%;
-    line-height:80px;
-    text-align:center;
-    z-index:999;
+    bottom: 0;
+    width: 100%;
 }
-
-.btn-whatsapp img {
-    width: 50px;
+.btn-whatsapp {
+    background-color: rgba(30, 252, 1, 0.795);
+    margin-left: 20px;
+    padding-top: 6px;
 }
-
 .scroll-top {
     background-color: #000;
-    width: 60px;
-    height: 60px;
-    color: #fff;
-    position: fixed;
-    right:20px;
-    bottom:20px;
-    border-radius:50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index:999;
+    left: 100%;
+    margin-right: 20px;
 }
-
-.scroll-top:hover {
-    cursor: pointer;
+button, .btn-whatsapp {
+    position: sticky;
+    bottom: 20px;
+    z-index: 999;
+}
+::ng-deep.mat-button-wrapper {
+    padding: 0 !important;
 }

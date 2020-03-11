@@ -16,6 +16,7 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 
 // Angular Material
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 
 // Componentes de Administrador
 import { LoginComponent } from './components/admin/components/login/login.component';
@@ -69,7 +70,8 @@ import { DomSeguroPipe } from './pipes/dom-seguro.pipe';
     AngularFireAuthModule,
     AngularFireDatabaseModule,
     AngularFireStorageModule,
-    MatDialogModule
+    MatDialogModule,
+    MatButtonModule
   ],
   entryComponents: [ModalGaleriaComponent],
   providers: [DataApiService, AngularFirestore],

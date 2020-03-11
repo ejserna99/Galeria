@@ -20,7 +20,7 @@
             </button>
           </div>
         </form>
-        <div *ngIf="respuesta.mensaje != ''"  class="alert alert-{{respuesta.color}} mt-2" role="alert">
+        <div id="success-alert" class="alert alert-{{respuesta.color}} alert-dismissible fade show mt-2" role="alert">
           {{respuesta.mensaje}}
         </div>
       </div>

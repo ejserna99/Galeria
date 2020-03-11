@@ -1,7 +1,12 @@
-<div class="card-columns">
+<div *ngIf="!galeriaItems" class="d-flex justify-content-center align-items-center h-100" style="height: 100vh;">
+    <div class="spinner-grow text-dark mx-auto my-auto" role="status" style="width: 5rem; height: 5rem;">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+<div #inicio class="card-columns">
    <div class="card animated fadeIn" *ngFor="let item of galeriaItems">
         <a (click)="openDialog(item.image)" data-toggle="modal" data-target="#Modal">
-            <img *ngIf="item.miniatura" class="card-img-top" src="{{item.miniatura}}" alt="Card modal" style="max-width: 450px; max-height: 450px;">
+            <img *ngIf="item.miniatura" class="card-img-top !important slow" src="{{item.miniatura}}" alt="Card modal" style="max-width: 450px; max-height: 450px;">
             <img *ngIf="!item.miniatura" class="card-img-top" src="{{item.image}}" alt="Card modal" style="max-width: 450px; max-height: 450px;">
         </a>
    </div>

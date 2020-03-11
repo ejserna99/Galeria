@@ -1,14 +1,4 @@
-<div class="btn-whatsapp d-none">
-  <a href="https://api.whatsapp.com/send?phone=5199999999" target="_blank">
-    <img src="http://s2.accesoperu.com/logos/btn_whatsapp.png" alt="">
-  </a>
-</div>
-<div class="scroll-top d-none">
-  <a (click)="scrollTop()">
-    <i class="fas fa-3x fa-angle-up"></i>
-  </a>
-</div>
-
+<div style="height: 165px;"></div>
 <footer class="font-small bg-dark">
   <div class="container">
     <div class="row pt-5">
@@ -44,6 +34,9 @@
   </div>
   
   <div class="text-white text-center py-3" style="background-color: #21272c;">
-      © {{year}} Copyright: <a [routerLink]="['/contacto']"> Galeria.com</a>
+    © {{year}} Copyright: <a [routerLink]="['/contacto']"> Galeria.com</a>
   </div>
 </footer>
+
+<a class="btn-whatsapp d-none" href="https://api.whatsapp.com/send?phone=573173157105&text=Me%20interesa%20reparar%20una%20pintura" target=”_blank” mat-fab color="primary"><i class="fab fa-3x fa-whatsapp"></i></a>
+<button class="scroll-top d-none" (click)="scrollTop()" mat-fab color="primary"><i class="fas fa-2x fa-chevron-up"></i></button>

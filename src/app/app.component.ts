@@ -35,13 +35,16 @@ export class AppComponent {
   @HostListener('window:scroll', ['$event'])onWindowScroll() {
     if ((window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop) > 620) {
       this.windowScrolled = true;
-      $('#navbar').removeClass('bg-dark').addClass('bg-light fixed-top fadeInUp');
+      $('#navbar').removeClass('bg-dark').addClass('bg-light fadeInUp');
+      $('.text-navbar').removeClass('text-white');
       // tslint:disable-next-line:max-line-length
       $('.active').css({color: 'color: rgba(0,0,0,.5) !important', 'text-shadow': '-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;'});
       $('.btn-whatsapp,.scroll-top').removeClass('d-none');
+
     } else if ((this.windowScrolled && window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop) < 500) {
       this.windowScrolled = false;
-      $('#navbar').removeClass('bg-light fixed-top fadeInUp').addClass('bg-dark');
+      $('#navbar').removeClass('bg-light fadeInUp').addClass('bg-dark');
+      $('.text-navbar').addClass('text-white');
       $('.btn-whatsapp,.scroll-top').addClass('d-none');
     }
   }

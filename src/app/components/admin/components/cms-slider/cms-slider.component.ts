@@ -15,7 +15,7 @@ export class CmsSliderComponent implements OnInit {
     image: new FormControl(null, Validators.required),
     clase: new FormControl(null, Validators.required)
   });
-  
+
   public mensajeArchivo = 'No hay una imagen seleccionada';
   public datosFormulario = new FormData();
   public nombreArchivo = 'Cargar imagen';
@@ -23,9 +23,14 @@ export class CmsSliderComponent implements OnInit {
   public porcentaje = 0;
   public finalizado = false;
 
-  constructor(public dataApiService: DataApiService) { }
+  constructor(public dataApiService: DataApiService) {
+    $(document).ready(function() {
+      $("#success-alert").hide();
+    });
+  }
 
   ngOnInit() {
+    $("#success-alert").hide();
   }
 
   public cambioArchivo(event: any) {
@@ -34,7 +39,7 @@ export class CmsSliderComponent implements OnInit {
         this.mensajeArchivo = `Imagen preparada: ${event.target.files[i].name}`;
         this.nombreArchivo = event.target.files[i].name;
         this.datosFormulario.delete('image');
-        this.datosFormulario.append('image', event.target.files[i], event.target.files[i].name)
+        this.datosFormulario.append('image', event.target.files[i], event.target.files[i].name);
       }
     } else {
       this.mensajeArchivo = 'No hay una imagen seleccionado';
@@ -42,43 +47,50 @@ export class CmsSliderComponent implements OnInit {
   }
 
   public insertarDatos(value: any) {
-    $(".btn").prop('disabled', true);
-    $(".text-btn").addClass('d-none');
-    $(".cargando").removeClass('d-none').addClass('d-block');
+    $('.btn').prop('disabled', true);
+    $('.text-btn').addClass('d-none');
+    $('.cargando').removeClass('d-none').addClass('d-block');
 
     const ruta = `upload/images/slider/slider_${this.nombreArchivo}`;
-    let archivo = this.datosFormulario.get('image');
-    let referencia = this.dataApiService.referenciaCloudStorage(ruta);
-    console.log(referencia);
-    let tarea = this.dataApiService.cloudStorage(ruta, archivo);
-    console.log(tarea);
+    const archivo = this.datosFormulario.get('image');
+    const referencia = this.dataApiService.referenciaCloudStorage(ruta);
+    const tarea = this.dataApiService.cloudStorage(ruta, archivo);
 
-    //Cambia el porcentaje
+    // Cambia el porcentaje
     tarea.percentageChanges().subscribe((porcentaje) => {
       this.porcentaje = Math.round(porcentaje);
-      if (this.porcentaje == 100) {
+      console.log(this.porcentaje);
+  
+      if (this.porcentaje === 100) {
         this.finalizado = true;
-
+  
         referencia.getDownloadURL().subscribe((URL) => {
-          if (this.finalizado) {
-            this.dataApiService.createNewGallery('slider', { image: URL, clase: value.clase, name: this.nombreArchivo })
-            .then(res => {
-              console.log(res);
-              this.respuesta.mensaje = 'Registro guardado correctamente.';
-              this.mensajeArchivo = 'No hay una imagen seleccionado';
-              $(".btn").prop('disabled', false);
-              $(".text-btn").removeClass('d-none');
-              $(".cargando").removeClass('d-block').addClass('d-none');
-              this.sliderCmsForm.reset();
-            }, err => {
-              console.log(err);
-              this.respuesta.color = 'danger';
-              this.respuesta.mensaje = 'No se pudo guardar el registro';
+          this.dataApiService.createNewGallery('slider', { image: URL, clase: value.clase, name: this.nombreArchivo })
+          .then(res => {
+            console.log(res);
+            this.respuesta.mensaje = 'Registro guardado correctamente.';
+            $("#success-alert").fadeTo(2000, 500).slideUp(500, function(){
+              $("#success-alert").slideUp(500);
             });
-          }
+            this.mensajeArchivo = 'No hay una imagen seleccionado';
+            $('.btn').prop('disabled', false);
+            $('.text-btn').removeClass('d-none');
+            $('.cargando').removeClass('d-block').addClass('d-none');
+            this.sliderCmsForm.reset();
+            return;
+          }, err => {
+            console.log(err);
+            this.respuesta.color = 'danger';
+            this.respuesta.mensaje = 'No se pudo guardar el registro';
+            $("#success-alert").fadeTo(2000, 500).slideUp(500, function(){
+              $("#success-alert").slideUp(500);
+            });
+            return;
+          });
         });
       }
     });
+
   }
 
 }

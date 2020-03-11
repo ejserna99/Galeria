@@ -7,9 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PrincipalComponent implements OnInit {
 
-  constructor() { }
+  cargado = false;
+  constructor() { 
+    console.log('me invocaste', this.cargado);
+  }
 
   ngOnInit() {
+  }
+
+  procesaPropagar(mensaje) {
+    this.cargado = mensaje;
+    console.log(mensaje);
   }
 
 }

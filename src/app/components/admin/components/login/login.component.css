@@ -3,7 +3,7 @@
     width: 350px;
     margin-top: auto;
     margin-bottom: auto;
-    background: #f39c12;
+    background: #3d3b38;
     position: relative;
     display: flex;
     justify-content: center;
@@ -20,7 +20,7 @@
     width: 170px;
     top: -75px;
     border-radius: 50%;
-    background: #60a3bc;
+    background: #6f797d;
     padding: 10px;
     text-align: center;
 }

@@ -22,9 +22,14 @@ export class CmsInicioComponent implements OnInit {
   public porcentaje = 0;
   public finalizado = false;
 
-  constructor(public dataApiService: DataApiService) { }
+  constructor(public dataApiService: DataApiService) {
+    $(document).ready(function() {
+      $("#success-alert").hide();
+    });
+  }
 
   ngOnInit() {
+    $("#success-alert").hide();
   }
 
   public cambioArchivo(event: any) {
@@ -53,27 +58,36 @@ export class CmsInicioComponent implements OnInit {
     // Cambia el porcentaje
     tarea.percentageChanges().subscribe((porcentaje) => {
       this.porcentaje = Math.round(porcentaje);
+      console.log(this.porcentaje);
+      
       if (this.porcentaje === 100) {
         this.finalizado = true;
 
         referencia.getDownloadURL().subscribe((URL) => {
-          if (this.finalizado) {
-            this.dataApiService.createNewGallery('inicio', { titulo: value.titulo, descripcion: value.descripcion, image: URL })
-            .then(res => {
-              console.log(res);
-              this.respuesta.mensaje = 'Registro guardado correctamente.';
-              $('.btn').prop('disabled', false);
-              $('.text-btn').removeClass('d-none');
-              $('.cargando').removeClass('d-block').addClass('d-none');
-              this.inicioCmsForm.reset();
-            }, err => {
-              console.log(err);
-              this.respuesta.color = 'danger';
-              this.respuesta.mensaje = 'No se pudo guardar el registro';
+          this.dataApiService.createNewGallery('inicio', { titulo: value.titulo, descripcion: value.descripcion, image: URL })
+          .then(res => {
+            console.log(res);
+            this.respuesta.mensaje = 'Registro guardado correctamente.';
+            $("#success-alert").fadeTo(2000, 500).slideUp(500, function(){
+              $("#success-alert").slideUp(500);
             });
-          }
+            $('.btn').prop('disabled', false);
+            $('.text-btn').removeClass('d-none');
+            $('.cargando').removeClass('d-block').addClass('d-none');
+            this.inicioCmsForm.reset();
+            return;
+          }, err => {
+            console.log(err);
+            this.respuesta.color = 'danger';
+            this.respuesta.mensaje = 'No se pudo guardar el registro';
+            $("#success-alert").fadeTo(2000, 500).slideUp(500, function(){
+              $("#success-alert").slideUp(500);
+            });
+            return;
+          });
         });
       }
     });
+
   }
 }

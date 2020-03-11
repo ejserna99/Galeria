@@ -26,7 +26,7 @@
         <div *ngIf="porcentaje > 0 && porcentaje < 100" class="progress my-2">
           <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [ngStyle]="{width: porcentaje}" aria-valuenow="porcentaje" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
-        <div *ngIf="respuesta.mensaje != ''"  class="alert alert-{{respuesta.color}} mt-2" role="alert">
+        <div id="success-alert" class="alert alert-{{respuesta.color}} alert-dismissible fade show mt-2" role="alert">
           {{respuesta.mensaje}}
         </div>
       </div>
