@@ -19,17 +19,17 @@ export class CmsGaleriaComponent implements OnInit {
   public nombreArchivo = { miniatura: '', image: '' };
   public respuesta = { color: 'success', mensaje: '' };
   public porcentaje = { miniatura: 0, image: 0 };
-  public finalizado = false;
+  public finalizado: boolean;
   public URL = { miniatura: '', image: '' };
 
   constructor(public dataApiService: DataApiService) {
-    $(document).ready(function() {
-      $("#success-alert").hide();
+    $(document).ready( () => {
+      $('#success-alert').hide();
     });
   }
 
   ngOnInit() {
-    $("#success-alert").hide();
+    $('#success-alert').hide();
   }
 
   public cambioArchivo(event: any) {
@@ -52,6 +52,7 @@ export class CmsGaleriaComponent implements OnInit {
   }
 
   public insertarDatos() {
+    this.finalizado = false;
     $('.btn').prop('disabled', true);
     $('.text-btn').addClass('d-none');
     $('.cargando').removeClass('d-none').addClass('d-block');
@@ -75,51 +76,60 @@ export class CmsGaleriaComponent implements OnInit {
     // Capturo el cambio de porcentaje de subida para las imagenes
     tareaMin.percentageChanges().subscribe((porcentajeMin) => {
       this.porcentaje.miniatura = Math.round(porcentajeMin);
-      console.log('miniatura: ',this.porcentaje.miniatura);
-      
-      tareaImg.percentageChanges().subscribe((porcentajeImg) => {
-        this.porcentaje.image = Math.round(porcentajeImg);
-        console.log('imagen: ',this.porcentaje.image);
-        
-        if (this.porcentaje.image === 100 && this.porcentaje.miniatura === 100) {
-          this.finalizado = true;
+      console.log('miniatura: ', this.porcentaje.miniatura);
 
-          // Obtengo la url de las imagenes subidas
-          referenciaMin.getDownloadURL().subscribe((URLMIN) => {
-            this.URL.miniatura = URLMIN;
-          
-            referenciaImg.getDownloadURL().subscribe((URLIMG) => {
-              this.URL.image = URLIMG;
-            
-              if (this.URL.image !== '' && this.URL.miniatura !== '') {
-                // Seguardan las urls en la base de datos
-                this.dataApiService.createNewGallery('galeria', {
-                  miniatura: this.URL.miniatura, image: this.URL.image, name: this.nombreArchivo.image
-                }).then(res => {
-                  this.respuesta.mensaje = 'Registro guardado correctamente.';
-                  $("#success-alert").fadeTo(2000, 500).slideUp(500, function(){
-                    $("#success-alert").slideUp(500);
-                  });
-                  this.mensajeArchivo = { miniatura: 'Cargar imagen en miniatura', image: 'Cargar imagen' };
-                  $('.btn').prop('disabled', false);
-                  $('.text-btn').removeClass('d-none');
-                  $('.cargando').removeClass('d-block').addClass('d-none');
-                  this.galeriaCmsForm.reset();
-                  return;
-                }, err => {
-                  this.respuesta.color = 'danger';
-                  this.respuesta.mensaje = 'No se pudo guardar el registro';
-                  $("#success-alert").fadeTo(2000, 500).slideUp(500, function(){
-                    $("#success-alert").slideUp(500);
-                  });
-                  return;
-                });
-              }
-            });
-          });
-        }
-      });
+      if (this.porcentaje.miniatura === 100) {
+        // Obtengo la url de las imagenes subidas
+        referenciaMin.getDownloadURL().subscribe((URLMIN) => {
+          this.URL.miniatura = URLMIN;
+          this.guardarImagenes();
+        });
+      }
     });
 
+    tareaImg.percentageChanges().subscribe((porcentajeImg) => {
+      this.porcentaje.image = Math.round(porcentajeImg);
+      console.log('imagen: ', this.porcentaje.image);
+
+      if (this.porcentaje.image === 100) {
+        // Obtengo la url de las imagenes subidas
+        referenciaImg.getDownloadURL().subscribe((URLIMG) => {
+          this.URL.image = URLIMG;
+          this.guardarImagenes();
+        });
+      }
+    });
+  }
+
+  public guardarImagenes() {
+    console.log('entre a validar');
+    if (this.URL.image !== '' && this.URL.miniatura !== '' && this.finalizado === false) {
+      this.finalizado = true;
+      // Seguardan las urls en la base de datos
+      this.dataApiService.createNewGallery('galeria', {
+        miniatura: this.URL.miniatura, image: this.URL.image, name: this.nombreArchivo.image
+      }).then(res => {
+        this.respuesta.mensaje = 'Registro guardado correctamente.';
+        $('#success-alert').fadeTo(2000, 500).slideUp(500, () => {
+          $('#success-alert').slideUp(500);
+        });
+        this.mensajeArchivo = { miniatura: 'Cargar imagen en miniatura', image: 'Cargar imagen' };
+        $('.btn').prop('disabled', false);
+        $('.text-btn').removeClass('d-none');
+        $('.cargando').removeClass('d-block').addClass('d-none');
+        this.galeriaCmsForm.reset();
+        console.log('Si se inserta la imagen en la base de datos', res);
+        return;
+      }, err => {
+        this.respuesta.color = 'danger';
+        this.respuesta.mensaje = 'No se pudo guardar el registro';
+        $('#success-alert').fadeTo(2000, 500).slideUp(500, () => {
+          $('#success-alert').slideUp(500);
+        });
+        console.log('Si no se inserta la imagen en la base de datos', err);
+        return;
+      });
+    }
+    return;
   }
 }

@@ -21,16 +21,16 @@ export class CmsSliderComponent implements OnInit {
   public nombreArchivo = 'Cargar imagen';
   public respuesta = { color: 'success', mensaje: '' };
   public porcentaje = 0;
-  public finalizado = false;
+  public finalizado: boolean;
 
   constructor(public dataApiService: DataApiService) {
-    $(document).ready(function() {
-      $("#success-alert").hide();
+    $(document).ready( () => {
+      $('#success-alert').hide();
     });
   }
 
   ngOnInit() {
-    $("#success-alert").hide();
+    $('#success-alert').hide();
   }
 
   public cambioArchivo(event: any) {
@@ -47,6 +47,7 @@ export class CmsSliderComponent implements OnInit {
   }
 
   public insertarDatos(value: any) {
+    this.finalizado = false;
     $('.btn').prop('disabled', true);
     $('.text-btn').addClass('d-none');
     $('.cargando').removeClass('d-none').addClass('d-block');
@@ -60,17 +61,17 @@ export class CmsSliderComponent implements OnInit {
     tarea.percentageChanges().subscribe((porcentaje) => {
       this.porcentaje = Math.round(porcentaje);
       console.log(this.porcentaje);
-  
-      if (this.porcentaje === 100) {
+
+      if (this.porcentaje === 100 && this.finalizado === false) {
         this.finalizado = true;
-  
+
         referencia.getDownloadURL().subscribe((URL) => {
           this.dataApiService.createNewGallery('slider', { image: URL, clase: value.clase, name: this.nombreArchivo })
           .then(res => {
             console.log(res);
             this.respuesta.mensaje = 'Registro guardado correctamente.';
-            $("#success-alert").fadeTo(2000, 500).slideUp(500, function(){
-              $("#success-alert").slideUp(500);
+            $('#success-alert').fadeTo(2000, 500).slideUp(500, () => {
+              $('#success-alert').slideUp(500);
             });
             this.mensajeArchivo = 'No hay una imagen seleccionado';
             $('.btn').prop('disabled', false);
@@ -82,8 +83,8 @@ export class CmsSliderComponent implements OnInit {
             console.log(err);
             this.respuesta.color = 'danger';
             this.respuesta.mensaje = 'No se pudo guardar el registro';
-            $("#success-alert").fadeTo(2000, 500).slideUp(500, function(){
-              $("#success-alert").slideUp(500);
+            $('#success-alert').fadeTo(2000, 500).slideUp(500, () => {
+              $('#success-alert').slideUp(500);
             });
             return;
           });
